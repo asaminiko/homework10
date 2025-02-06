@@ -6,36 +6,35 @@ try {
   //контактна книга
   let book = {
     contacts: [
-      { name: 'nika', phone: '+380996326789', email: 'lalal@gmail.com' },
-      { name: 'alina', phone: '0994375639', email: 'sdf33@gmail.com' },
+      { name: 'alina', phone: '+380996326789', email: 'lalal@gmail.com' },
+      { name: 'nika', phone: '0994375639', email: 'sdf33@gmail.com' },
       { name: 'ann', phone: '0995432799', email: 'sdf33@gmail.com' },
     ],
+    //пошук контакту за name
+    searchByName: function (a) {
+      if (this.contacts.find((i) => i.name === a)) {
+        console.log(`Контакт з name ${a} знайдено`)
+      } else {
+        console.log(`Контакт з name ${a} не знайдено`)
+      }
+    },
+    //створення контакту
+    createContact: function (name, phone, email) {
+      this.contacts.push({
+        name: name,
+        phone: phone,
+        email: email,
+      })
+      console.log('Контакт створено')
+    },
   }
-  createContact(name, phone, email, book.contacts)
-  searchByName('nika', book.contacts)
+  book.createContact(name, phone, email)
+  book.searchByName('nika')
   console.log(book.contacts)
 } catch (error) {
   console.error(`Помилка ${error}`)
 } finally {
   console.log('Перевірено')
-}
-
-//пошук контакту за name
-function searchByName(a, contact) {
-  if (contact.find((i) => i.name === a)) {
-    console.log(`Контакт з name ${a} знайдено`)
-  } else {
-    console.log(`Контакт з name ${a} не знайдено`)
-  }
-}
-//створення контакту
-function createContact(name, phone, email, contact) {
-  contact.push({
-    name: name,
-    phone: phone,
-    email: email,
-  })
-  console.log('Контакт створено')
 }
 
 //перевірки
