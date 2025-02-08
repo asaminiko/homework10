@@ -1,70 +1,70 @@
-try {
-  let name = checkName(prompt("Введіть ім'я"))
-  let phone = checkPhone(prompt('Введіть номер телефону'))
-  let email = checkEmail(prompt('Введіть адресу електронної пошти'))
+let name = checkName(prompt("Введіть ім'я").trim())
+let phone = checkPhone(prompt('Введіть номер телефону').trim())
+let email = checkEmail(prompt('Введіть адресу електронної пошти').trim())
 
-  //контактна книга
-  let book = {
-    contacts: [
-      { name: 'alina', phone: '+380996326789', email: 'lalal@gmail.com' },
-      { name: 'nika', phone: '0994375639', email: 'sdf33@gmail.com' },
-      { name: 'ann', phone: '0995432799', email: 'sdf33@gmail.com' },
-    ],
-    //пошук контакту за name
-    searchByName: function (a) {
-      if (this.contacts.find((i) => i.name === a)) {
-        console.log(`Контакт з name ${a} знайдено`)
-      } else {
-        console.log(`Контакт з name ${a} не знайдено`)
+//контактна книга
+let book = {
+  contacts: [
+    { name: 'nika', phone: '+380996326789', email: 'lalal@gmail.com' },
+    { name: 'Nikka', phone: '0994375639', email: 'sdf33@gmail.com' },
+    { name: 'ann', phone: '09954333799', email: 'sdf43@gmail.com' },
+    { name: 'nikA', phone: '0955375639', email: 'sdf63@gmail.com' },
+    { name: 'nikoletta', phone: '0996632799', email: 'sd633@gmail.com' },
+  ],
+  //пошук контакту за name
+  searchByName: function (word) {
+    console.log(`Пошук контакту з name: ${word}`)
+    word = word.toLowerCase()
+    let b = this.contacts.filter((j) => {
+      let myName = j.name.toLowerCase()
+      if (word.substring(1, 3) === myName.substring(1, 3)) {
+        return true
       }
-    },
-    //створення контакту
-    createContact: function (name, phone, email) {
-      this.contacts.push({
-        name: name,
-        phone: phone,
-        email: email,
-      })
-      console.log('Контакт створено')
-    },
-  }
-  book.createContact(name, phone, email)
-  book.searchByName('nika')
-  console.log(book.contacts)
-} catch (error) {
-  console.error(`Помилка ${error}`)
-} finally {
-  console.log('Перевірено')
+    })
+    console.log(b)
+  },
+  //створення контакту
+  createContact: function (name, phone, email) {
+    this.contacts.push({ name, phone, email })
+    console.log(`Створено контакт ${[...arguments]}`)
+  },
 }
+book.createContact(name, phone, email)
+book.searchByName('nIkaaa')
+console.log(book.contacts)
 
 //перевірки
-function checkEmail(y) {
-  if (y === undefined || y === null) throw new TypeError('Невірний тип даних.') //перевірка на undefined, null
-  if (typeof y === 'string' && y.trim() === '') {
+function checkEmail(input) {
+  if (input === undefined || input === null)
+    throw new TypeError('Невірний тип даних.') //перевірка на undefined, null
+  if (typeof input === 'string' && input.trim() === '') {
     throw new TypeError('Пуста строка.') //перевірка на пусту строку
   }
 
-  return y
+  return input
 }
-function checkName(x) {
-  if (x === undefined || x === null || x.trim() === '') {
-    //перевірка на undefined, null, пусту строку
-    return false
-  } else if (typeof x === 'string' && /^[a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ\s]+$/.test(x)) {
-    //перевірка на символи
-    return x
-  } else {
-    return false
+function checkName(input) {
+  if (input === undefined || input === null)
+    throw new TypeError('Невірний тип даних.') //перевірка на undefined, null
+  if (typeof input === 'string' && input.trim() === '') {
+    throw new TypeError('Пуста строка.') //перевірка на пусту строку
   }
+  if (
+    !(typeof input === 'string' && /^[a-zA-Zа-яА-ЯёЁіІїЇєЄґҐ\s]+$/.test(input))
+  ) {
+    throw new SyntaxError("Це не ім'я.") //перевірка на символи
+  }
+
+  return input
 }
-function checkPhone(x) {
-  if (x === undefined || x === null || x.trim() === '') {
-    //перевірка на undefined, null, пусту строку
-    return false
-  } else if (typeof x === 'string' && /^\+?[0-9]{10,13}$/.test(x)) {
-    //перевірка на символи
-    return x
-  } else {
-    return false
+function checkPhone(input) {
+  if (input === undefined || input === null)
+    throw new TypeError('Невірний тип даних.') //перевірка на undefined, null
+  if (typeof input === 'string' && input.trim() === '') {
+    throw new TypeError('Пуста строка.') //перевірка на пусту строку
   }
+  if (!(typeof input === 'string' && /^\+?[0-9]{10,13}$/.test(input))) {
+    throw new SyntaxError('Це не номер телефону.') //перевірка на символи
+  }
+  return input
 }
